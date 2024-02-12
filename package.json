@@ -1,0 +1,21 @@
+{
+  "name": "cloud-hosting-build-repo-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1555.0",
+    "console": "^0.7.2",
+    "dotenv": "^16.4.2",
+    "redis": "^4.6.13",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17"
+  }
+}
