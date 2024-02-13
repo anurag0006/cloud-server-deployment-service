@@ -1,6 +1,7 @@
 import { createClient, commandOptions } from "redis";
 import env from "dotenv";
-import { downloadS3Folder } from "./aws";
+import { copyFinalDist, downloadS3Folder } from "./aws";
+import { buildProject } from "./utils";
 
 env.config();
 
@@ -19,7 +20,9 @@ async function main() {
     //  @ts-ignore
     const id = response.element;
 
-    await downloadS3Folder(`/output/${id}`);
+    await downloadS3Folder(`output/${id}/`);
+    await buildProject(id);
+    copyFinalDist(id);
   }
 }
 

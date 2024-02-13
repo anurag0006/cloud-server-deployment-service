@@ -19,11 +19,14 @@ export async function downloadS3Folder(prefix: string) {
   //
   const allPromises =
     allFiles.Contents?.map(async ({ Key }) => {
+      // console.log("anurag");
       return new Promise(async (resolve) => {
         if (!Key) {
           resolve("");
+          // console.log("NO");
           return;
         }
+        // console.log("YES");
         const finalOutputPath = path.join(__dirname, Key);
         const outputFile = fs.createWriteStream(finalOutputPath);
         const dirName = path.dirname(finalOutputPath);
@@ -43,12 +46,14 @@ export async function downloadS3Folder(prefix: string) {
       });
     }) || [];
   console.log("awaiting");
+  // console.log(allFiles);
+  console.log(allPromises?.filter((x) => x != undefined));
 
   await Promise.all(allPromises?.filter((x) => x !== undefined));
 }
 
 export function copyFinalDist(id: string) {
-  const folderPath = path.join(__dirname, `output/${id}/dist`);
+  const folderPath = path.join(__dirname, `output/${id}/build`);
   const allFiles = getAllFiles(folderPath);
   allFiles.forEach((file) => {
     uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);

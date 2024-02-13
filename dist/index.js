@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const redis_1 = require("redis");
 const dotenv_1 = __importDefault(require("dotenv"));
 const aws_1 = require("./aws");
+const utils_1 = require("./utils");
 dotenv_1.default.config();
 const subscriber = (0, redis_1.createClient)();
 subscriber.connect();
@@ -25,7 +26,9 @@ function main() {
             console.log(response);
             //  @ts-ignore
             const id = response.element;
-            yield (0, aws_1.downloadS3Folder)(`/output/${id}`);
+            yield (0, aws_1.downloadS3Folder)(`output/${id}/`);
+            yield (0, utils_1.buildProject)(id);
+            (0, aws_1.copyFinalDist)(id);
         }
     });
 }

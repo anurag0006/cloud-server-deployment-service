@@ -32,11 +32,14 @@ function downloadS3Folder(prefix) {
             .promise();
         //
         const allPromises = ((_a = allFiles.Contents) === null || _a === void 0 ? void 0 : _a.map(({ Key }) => __awaiter(this, void 0, void 0, function* () {
+            // console.log("anurag");
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                 if (!Key) {
                     resolve("");
+                    // console.log("NO");
                     return;
                 }
+                // console.log("YES");
                 const finalOutputPath = path_1.default.join(__dirname, Key);
                 const outputFile = fs_1.default.createWriteStream(finalOutputPath);
                 const dirName = path_1.default.dirname(finalOutputPath);
@@ -56,12 +59,14 @@ function downloadS3Folder(prefix) {
             }));
         }))) || [];
         console.log("awaiting");
+        // console.log(allFiles);
+        console.log(allPromises === null || allPromises === void 0 ? void 0 : allPromises.filter((x) => x != undefined));
         yield Promise.all(allPromises === null || allPromises === void 0 ? void 0 : allPromises.filter((x) => x !== undefined));
     });
 }
 exports.downloadS3Folder = downloadS3Folder;
 function copyFinalDist(id) {
-    const folderPath = path_1.default.join(__dirname, `output/${id}/dist`);
+    const folderPath = path_1.default.join(__dirname, `output/${id}/build`);
     const allFiles = getAllFiles(folderPath);
     allFiles.forEach((file) => {
         uploadFile(`dist/${id}/` + file.slice(folderPath.length + 1), file);
